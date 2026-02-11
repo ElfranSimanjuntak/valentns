@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Special</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    background: linear-gradient(135deg, #453e40, #280f19);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+/* Container */
+.slider {
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+}
+
+/* Slide */
+.slide {
+    display: none;
+    text-align: center;
+    padding: 50px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 25px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    animation: fade 1s;
+}
+
+.active {
+    display: block;
+}
+
+/* Nama besar */
+.nama {
+    font-size: 60px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+/* Ucapan */
+.ucapan h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.ucapan p {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+/* Tombol */
+button {
+    margin-top: 30px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #ff4e50;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff4e50;
+    color: white;
+}
+
+/* Animasi */
+@keyframes fade {
+    from {opacity: 0; transform: scale(0.9);}
+    to {opacity: 1; transform: scale(1);}
+}
+
+/* Hati jatuh */
+.heart {
+    position: absolute;
+    top: -10px;
+    color: rgb(234, 230, 230);
+    animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+    0% {transform: translateY(0); opacity: 1;}
+    100% {transform: translateY(100vh); opacity: 0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="slider">
+
+    <!-- Slide 1: Nama saja -->
+    <div class="slide active">
+        <div class="nama">Haloo...brokuu🫠 <br> Lama tak bersuo</div>
+        <button onclick="nextSlide()">Buka Ucapan 💌</button>
+    </div>
+
+    <!-- Slide 2: Ucapan -->
+    <div class="slide">
+        <div class="ucapan">
+            <h2>Selamat Hari Valentine bre,selamat hari kasih <br> sayang🤍</h2>
+            <p> Semoga hari-harimu selalu dipenuhi hal-hal baik, <br>dikelilingi orang-orang yang menghargaimu,dan mencintaimu <br> </p>
+            <p>senang dapat mengenalmu dan semoga kelak kita dapat bertemu:)</p>
+           
+        </div>
+    </div>
+
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll(".slide");
+let heartInterval = null;
+
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === index) {
+            slide.classList.add("active");
+        }
+    });
+
+    // Kalau slide ke-2 aktif → mulai animasi
+    if (index === 1) {
+        startHearts();
+    } else {
+        stopHearts();
+    }
+}
+
+function nextSlide() {
+    currentSlide = 1;
+    showSlide(currentSlide);
+}
+
+/* ========================= */
+/* Animasi hati khusus slide 2 */
+/* ========================= */
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "🤍";
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+
+    // TAMBAHKAN ke slide ke-2 saja
+    slides[1].appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}
+
+function startHearts() {
+    if (!heartInterval) {
+        heartInterval = setInterval(createHeart, 400);
+    }
+}
+
+function stopHearts() {
+    clearInterval(heartInterval);
+    heartInterval = null;
+}
+</script>
+
+
+</body>
+</html>
